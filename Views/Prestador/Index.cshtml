@@ -1,0 +1,36 @@
+﻿@model IEnumerable<sistemaagendamento.Models.Prestador>
+
+@{
+    ViewData["Title"] = "Lista de Prestadores";
+}
+
+<h2>Prestadores de Serviços</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Novo Prestador</a>
+</p>
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Telefone</th>
+            <th>E-mail</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Nome</td>
+                <td>@item.Telefone</td>
+                <td>@item.Email</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Codigo" class="btn btn-sm btn-warning">Editar</a>
+                    <a asp-action="Delete" asp-route-id="@item.Codigo" class="btn btn-sm btn-danger">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

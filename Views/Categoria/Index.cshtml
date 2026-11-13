@@ -1,0 +1,29 @@
+﻿@model IEnumerable<sistemaagendamento.Models.Categoria>
+
+@{
+    ViewData["Title"] = "Categorias";
+}
+
+<h2>Categorias de Serviços</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Nova Categoria</a>
+</p>
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Descrição</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Nome</td>
+                <td>@item.Descricao</td>
+            </tr>
+        }
+    </tbody>
+</table>

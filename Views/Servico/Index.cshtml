@@ -1,0 +1,37 @@
+﻿@model IEnumerable<sistemaagendamento.Models.Servico>
+
+@{
+    ViewData["Title"] = "Serviços";
+}
+
+<h2>Serviços Disponíveis</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Novo Serviço</a>
+</p>
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Descrição</th>
+            <th>Preço</th>
+            <th>Duração (min)</th>
+            <th>Categoria</th>
+            <th>Prestador</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Nome</td>
+                <td>@item.Descricao</td>
+                <td>@item.Preco.ToString("C")</td>
+                <td>@item.DuracaoMinutos</td>
+                <td>@item.Categoria?.Nome</td>
+                <td>@item.Prestador?.Nome</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,46 @@
+﻿@model IEnumerable<sistemaagendamento.Models.Agendamento>
+
+@{
+    ViewData["Title"] = "Agendamentos";
+}
+
+<h2>Agendamentos Registados</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Novo Agendamento</a>
+</p>
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Cliente</th>
+            <th>Serviço</th>
+            <th>Prestador</th>
+            <th>Data e Hora</th>
+            <th>Situação</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model) {
+            <tr>
+                <td>@item.Cliente?.Nome</td>
+                <td>@item.Servico?.Nome</td>
+                <td>@item.Servico?.Prestador?.Nome</td>
+                <td>@item.DataHora.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>
+                    <span class="badge @(item.Situacao == "Confirmado" ? "bg-success" : item.Situacao == "Cancelado" ? "bg-danger" : "bg-warning")">
+                        @item.Situacao
+                    </span>
+                </td>
+                <td>
+                    @if (item.Situacao != "Cancelado") {
+                        <form asp-action="Cancelar" asp-route-id="@item.Codigo" method="post" style="display:inline;">
+                            <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Tem a certeza que deseja cancelar este agendamento?');">Cancelar</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

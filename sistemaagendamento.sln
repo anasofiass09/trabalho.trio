@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34221.43
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sistemaagendamento", "sistemaagendamento\sistemaagendamento.csproj", "{888CFE09-7F28-471A-A073-AE8757D0C349}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{888CFE09-7F28-471A-A073-AE8757D0C349}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{888CFE09-7F28-471A-A073-AE8757D0C349}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{888CFE09-7F28-471A-A073-AE8757D0C349}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{888CFE09-7F28-471A-A073-AE8757D0C349}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1EAC53D2-50C2-4A7B-B285-6B1E926BF5C0}
+	EndGlobalSection
+EndGlobal
