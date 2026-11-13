@@ -1,0 +1,38 @@
+﻿@model sistemaagendamento.Models.Pagamento
+
+@{
+    ViewData["Title"] = "Registar Pagamento";
+}
+
+<h2>Registar Pagamento</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group mb-3">
+                <label asp-for="AgendamentoId" class="control-label">Agendamento Nº</label>
+                <select asp-for="AgendamentoId" class="form-control" asp-items="ViewBag.AgendamentoId"></select>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Valor" class="control-label"></label>
+                <input asp-for="Valor" type="number" step="0.01" class="form-control" />
+                <span asp-validation-for="Valor" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="FormaPagamento" class="control-label">Forma de Pagamento</label>
+                <select asp-for="FormaPagamento" class="form-control">
+                    <option value="Pix">Pix</option>
+                    <option value="Cartão de Crédito">Cartão de Crédito</option>
+                    <option value="Cartão de Débito">Cartão de Débito</option>
+                    <option value="Dinheiro">Dinheiro</option>
+                </select>
+            </div>
+            <div class="form-group mt-3">
+                <input type="submit" value="Confirmar Pagamento" class="btn btn-success" />
+                <a asp-action="Index" class="btn btn-secondary">Voltar</a>
+            </div>
+        </form>
+    </div>
+</div>

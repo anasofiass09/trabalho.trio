@@ -1,0 +1,39 @@
+﻿@model sistemaagendamento.Models.Avaliacao
+
+@{
+    ViewData["Title"] = "Nova Avaliação";
+}
+
+<h2>Avaliar Serviço</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group mb-3">
+                <label asp-for="AgendamentoId" class="control-label">Agendamento Nº</label>
+                <select asp-for="AgendamentoId" class="form-control" asp-items="ViewBag.AgendamentoId"></select>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Nota" class="control-label">Nota (1 a 5)</label>
+                <select asp-for="Nota" class="form-control">
+                    <option value="5">5 - Excelente</option>
+                    <option value="4">4 - Muito Bom</option>
+                    <option value="3">3 - Bom</option>
+                    <option value="2">2 - Regular</option>
+                    <option value="1">1 - Mau</option>
+                </select>
+                <span asp-validation-for="Nota" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Comentario" class="control-label">Comentário</label>
+                <textarea asp-for="Comentario" class="form-control" rows="3"></textarea>
+            </div>
+            <div class="form-group mt-3">
+                <input type="submit" value="Enviar Avaliação" class="btn btn-success" />
+                <a asp-action="Index" class="btn btn-secondary">Voltar</a>
+            </div>
+        </form>
+    </div>
+</div>

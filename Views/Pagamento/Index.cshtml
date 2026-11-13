@@ -1,0 +1,37 @@
+﻿@model IEnumerable<sistemaagendamento.Models.Pagamento>
+
+@{
+    ViewData["Title"] = "Pagamentos";
+}
+
+<h2>Registo de Pagamentos</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Registar Pagamento</a>
+</p>
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Agendamento Nº</th>
+            <th>Cliente</th>
+            <th>Valor</th>
+            <th>Forma de Pagamento</th>
+            <th>Data</th>
+            <th>Situação</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>#@item.AgendamentoId</td>
+                <td>@item.Agendamento?.Cliente?.Nome</td>
+                <td>@item.Valor.ToString("C")</td>
+                <td>@item.FormaPagamento</td>
+                <td>@item.DataPagamento.ToString("dd/MM/yyyy HH:mm")</td>
+                <td><span class="badge bg-success">@item.Situacao</span></td>
+            </tr>
+        }
+    </tbody>
+</table>
