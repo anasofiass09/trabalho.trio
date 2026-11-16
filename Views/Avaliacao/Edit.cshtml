@@ -1,0 +1,14 @@
+@model sistemaagendamento.Models.Avaliacao
+@{ ViewData["Title"] = "Editar Avaliacao"; }
+<h2>Editar Avaliacao</h2>
+<form asp-action="Edit" asp-route-id="@Model.Codigo" method="post" class="col-md-7">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Codigo" />
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="mb-3"><label asp-for="AgendamentoId" class="form-label">Agendamento</label><select asp-for="AgendamentoId" class="form-select" asp-items="ViewBag.AgendamentoId"><option value="">Selecione...</option></select><span asp-validation-for="AgendamentoId" class="text-danger"></span></div>
+    <div class="mb-3"><label asp-for="Nota" class="form-label">Nota de 1 a 5</label><input asp-for="Nota" type="number" min="1" max="5" class="form-control" /><span asp-validation-for="Nota" class="text-danger"></span></div>
+    <div class="mb-3"><label asp-for="Comentario" class="form-label">Comentario</label><textarea asp-for="Comentario" class="form-control" rows="3"></textarea><span asp-validation-for="Comentario" class="text-danger"></span></div>
+    <div class="mb-3"><label asp-for="DataAvaliacao" class="form-label">Data da avaliacao</label><input asp-for="DataAvaliacao" type="datetime-local" class="form-control" /><span asp-validation-for="DataAvaliacao" class="text-danger"></span></div>
+    <button type="submit" class="btn btn-primary">Salvar alteracoes</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>

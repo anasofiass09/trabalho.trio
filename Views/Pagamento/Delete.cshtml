@@ -1,0 +1,10 @@
+@model sistemaagendamento.Models.Pagamento
+@{ ViewData["Title"] = "Excluir Pagamento"; }
+<h2>Excluir Pagamento</h2>
+<div class="alert alert-warning">Esta acao nao pode ser desfeita. Se existirem outros registros vinculados, a exclusao sera bloqueada.</div>
+<p><strong>Registro:</strong> #@Model.Codigo</p>
+<form asp-action="Delete" asp-route-id="@Model.Codigo" method="post">
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-danger">Confirmar exclusao</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>
