@@ -1,0 +1,13 @@
+@model sistemaagendamento.Models.Cliente
+@{ ViewData["Title"] = "Editar Cliente"; }
+<h2>Editar Cliente</h2>
+<form asp-action="Edit" asp-route-id="@Model.Codigo" method="post" class="col-md-7">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Codigo" />
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="mb-3"><label asp-for="Nome" class="form-label">Nome</label><input asp-for="Nome" type="text" class="form-control" /><span asp-validation-for="Nome" class="text-danger"></span></div>
+    <div class="mb-3"><label asp-for="Telefone" class="form-label">Telefone</label><input asp-for="Telefone" type="tel" class="form-control" /><span asp-validation-for="Telefone" class="text-danger"></span></div>
+    <div class="mb-3"><label asp-for="Email" class="form-label">E-mail</label><input asp-for="Email" type="email" class="form-control" /><span asp-validation-for="Email" class="text-danger"></span></div>
+    <button type="submit" class="btn btn-primary">Salvar alteracoes</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>

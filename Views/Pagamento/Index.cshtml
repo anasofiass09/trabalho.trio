@@ -1,4 +1,4 @@
-﻿@model IEnumerable<sistemaagendamento.Models.Pagamento>
+@model IEnumerable<sistemaagendamento.Models.Pagamento>
 
 @{
     ViewData["Title"] = "Pagamentos";
@@ -19,6 +19,7 @@
             <th>Forma de Pagamento</th>
             <th>Data</th>
             <th>Situação</th>
+        <th>Acoes</th>
         </tr>
     </thead>
     <tbody>
@@ -31,6 +32,10 @@
                 <td>@item.FormaPagamento</td>
                 <td>@item.DataPagamento.ToString("dd/MM/yyyy HH:mm")</td>
                 <td><span class="badge bg-success">@item.Situacao</span></td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Codigo" class="btn btn-sm btn-warning">Editar</a>
+                    <a asp-action="Delete" asp-route-id="@item.Codigo" class="btn btn-sm btn-danger">Excluir</a>
+                </td>
             </tr>
         }
     </tbody>

@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using sistemaagendamento.Data;
 using sistemaagendamento.Models;
@@ -54,9 +54,9 @@ namespace sistemaagendamento.Controllers
         // POST: Clientes/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int codigo, Cliente cliente)
+        public async Task<IActionResult> Edit(int id, Cliente cliente)
         {
-            if (codigo != cliente.Codigo) return NotFound();
+            if (id != cliente.Codigo) return NotFound();
 
             if (ModelState.IsValid)
             {
@@ -81,13 +81,20 @@ namespace sistemaagendamento.Controllers
         // POST: Clientes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int codigo)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var cliente = await _context.Clientes.FindAsync(codigo);
+            var cliente = await _context.Clientes.FindAsync(id);
             if (cliente != null)
             {
                 _context.Clientes.Remove(cliente);
-                await _context.SaveChangesAsync();
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateException)
+                {
+                    TempData["ErrorMessage"] = "Nao e possivel excluir: existem registros relacionados. Remova ou altere os vinculos primeiro.";
+                }
             }
             return RedirectToAction(nameof(Index));
         }

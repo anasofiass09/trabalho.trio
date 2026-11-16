@@ -1,0 +1,14 @@
+@model sistemaagendamento.Models.Agendamento
+@{ ViewData["Title"] = "Editar Agendamento"; }
+<h2>Editar Agendamento</h2>
+<form asp-action="Edit" asp-route-id="@Model.Codigo" method="post" class="col-md-7">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Codigo" />
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="mb-3"><label asp-for="ClienteId" class="form-label">Cliente</label><select asp-for="ClienteId" class="form-select" asp-items="ViewBag.ClienteId"><option value="">Selecione...</option></select><span asp-validation-for="ClienteId" class="text-danger"></span></div>
+    <div class="mb-3"><label asp-for="ServicoId" class="form-label">Servico</label><select asp-for="ServicoId" class="form-select" asp-items="ViewBag.ServicoId"><option value="">Selecione...</option></select><span asp-validation-for="ServicoId" class="text-danger"></span></div>
+    <div class="mb-3"><label asp-for="DataHora" class="form-label">Data e hora</label><input asp-for="DataHora" type="datetime-local" class="form-control" /><span asp-validation-for="DataHora" class="text-danger"></span></div>
+    <div class="mb-3"><label asp-for="Situacao" class="form-label">Situacao</label><select asp-for="Situacao" class="form-select"><option value="Pendente">Pendente</option><option value="Confirmado">Confirmado</option><option value="Cancelado">Cancelado</option><option value="Concluido">Concluido</option></select></div>
+    <button type="submit" class="btn btn-primary">Salvar alteracoes</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>

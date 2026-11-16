@@ -1,4 +1,4 @@
-﻿
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -171,6 +171,99 @@ namespace sistemaagendamento.Controllers
                 "Nome",
                 agendamento?.ServicoId
             );
+        }
+
+
+
+        // EDICAO
+        [HttpGet]
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null) return NotFound();
+            var item = await _context.Agendamentos.FindAsync(id);
+            if (item == null) return NotFound();
+            PrepararListasEdicao(item);
+            return View(item);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, Agendamento item)
+        {
+            if (id != item.Codigo) return NotFound();
+            ModelState.Remove(nameof(Agendamento.Cliente));
+            ModelState.Remove(nameof(Agendamento.Servico));
+            if (!ModelState.IsValid)
+            {
+                PrepararListasEdicao(item);
+                return View(item);
+            }
+            if (item.DataHora <= DateTime.Now)
+            {
+                ModelState.AddModelError(nameof(item.DataHora), "Selecione um horario futuro.");
+                PrepararListasEdicao(item);
+                return View(item);
+            }
+            if (!await _context.Clientes.AnyAsync(x => x.Codigo == item.ClienteId) ||
+                !await _context.Servicos.AnyAsync(x => x.Codigo == item.ServicoId))
+            {
+                ModelState.AddModelError("", "Cliente ou servico inexistente.");
+                PrepararListasEdicao(item);
+                return View(item);
+            }
+            var atual = await _context.Agendamentos.FindAsync(id);
+            if (atual == null) return NotFound();
+            atual.ClienteId = item.ClienteId;
+            atual.ServicoId = item.ServicoId;
+            atual.DataHora = item.DataHora;
+            atual.Situacao = item.Situacao;
+            try
+            {
+                await _context.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Registro atualizado com sucesso.";
+                return RedirectToAction(nameof(Index));
+            }
+            catch (DbUpdateException)
+            {
+                ModelState.AddModelError("", "Nao foi possivel salvar. Confira os dados e seus relacionamentos.");
+            PrepararListasEdicao(item);
+                return View(item);
+            }
+        }
+
+        // EXCLUSAO
+        [HttpGet]
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null) return NotFound();
+            var item = await _context.Agendamentos.AsNoTracking().FirstOrDefaultAsync(x => x.Codigo == id);
+            if (item == null) return NotFound();
+            return View(item);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var item = await _context.Agendamentos.FindAsync(id);
+            if (item == null) return NotFound();
+            _context.Agendamentos.Remove(item);
+            try
+            {
+                await _context.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Registro excluido com sucesso.";
+            }
+            catch (DbUpdateException)
+            {
+                TempData["ErrorMessage"] = "Nao e possivel excluir: o registro esta vinculado a outros dados. Remova os vinculos primeiro.";
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+        private void PrepararListasEdicao(Agendamento? item = null)
+        {
+            ViewData["ClienteId"] = new SelectList(_context.Clientes.AsNoTracking(), "Codigo", "Nome", item?.ClienteId);
+            ViewData["ServicoId"] = new SelectList(_context.Servicos.AsNoTracking(), "Codigo", "Nome", item?.ServicoId);
         }
 
     }

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<sistemaagendamento.Models.Agendamento>
+@model IEnumerable<sistemaagendamento.Models.Agendamento>
 
 @{
     ViewData["Title"] = "Agendamentos";
@@ -19,6 +19,7 @@
             <th>Data e Hora</th>
             <th>Situação</th>
             <th>Ações</th>
+        <th>Acoes</th>
         </tr>
     </thead>
     <tbody>
@@ -34,6 +35,8 @@
                     </span>
                 </td>
                 <td>
+                    <a asp-action="Edit" asp-route-id="@item.Codigo" class="btn btn-sm btn-warning">Editar</a>
+                    <a asp-action="Delete" asp-route-id="@item.Codigo" class="btn btn-sm btn-danger">Excluir</a>
                     @if (item.Situacao != "Cancelado") {
                         <form asp-action="Cancelar" asp-route-id="@item.Codigo" method="post" style="display:inline;">
                             <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Tem a certeza que deseja cancelar este agendamento?');">Cancelar</button>

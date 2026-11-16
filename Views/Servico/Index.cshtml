@@ -1,4 +1,4 @@
-﻿@model IEnumerable<sistemaagendamento.Models.Servico>
+@model IEnumerable<sistemaagendamento.Models.Servico>
 
 @{
     ViewData["Title"] = "Serviços";
@@ -19,6 +19,7 @@
             <th>Duração (min)</th>
             <th>Categoria</th>
             <th>Prestador</th>
+        <th>Acoes</th>
         </tr>
     </thead>
     <tbody>
@@ -31,6 +32,10 @@
                 <td>@item.DuracaoMinutos</td>
                 <td>@item.Categoria?.Nome</td>
                 <td>@item.Prestador?.Nome</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Codigo" class="btn btn-sm btn-warning">Editar</a>
+                    <a asp-action="Delete" asp-route-id="@item.Codigo" class="btn btn-sm btn-danger">Excluir</a>
+                </td>
             </tr>
         }
     </tbody>

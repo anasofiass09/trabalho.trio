@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-pt">
 <head>
     <meta charset="utf-8" />
@@ -45,6 +45,14 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
+            @if (TempData["ErrorMessage"] is string errorMessage)
+            {
+                <div class="alert alert-warning" role="alert">@errorMessage</div>
+            }
+            @if (TempData["SuccessMessage"] is string successMessage)
+            {
+                <div class="alert alert-success" role="status">@successMessage</div>
+            }
             @RenderBody()
         </main>
     </div>

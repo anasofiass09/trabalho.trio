@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using sistemaagendamento.Data;
 using sistemaagendamento.Models;
@@ -87,7 +87,14 @@ namespace sistemaagendamento.Controllers
             if (prestador != null)
             {
                 _context.Prestadores.Remove(prestador);
-                await _context.SaveChangesAsync();
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateException)
+                {
+                    TempData["ErrorMessage"] = "Nao e possivel excluir: existem registros relacionados. Remova ou altere os vinculos primeiro.";
+                }
             }
             return RedirectToAction(nameof(Index));
         }
