@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using sistemaagendamento.Models;
 
 namespace sistemaagendamento.Data
@@ -24,6 +24,9 @@ namespace sistemaagendamento.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            // Todas as tabelas foram criadas no SQL Editor do Supabase neste schema.
+            modelBuilder.HasDefaultSchema("agendamento");
+
             modelBuilder.Entity<Cliente>().ToTable("Cliente").HasKey(c => c.Codigo);
             modelBuilder.Entity<Prestador>().ToTable("Prestador").HasKey(p => p.Codigo);
             modelBuilder.Entity<Categoria>().ToTable("Categoria").HasKey(c => c.Codigo);
@@ -44,7 +47,7 @@ namespace sistemaagendamento.Data
                     .HasColumnName("CodigoAgendamento");
 
                 entity.Property(p => p.Valor)
-                    .HasColumnType("decimal(10,2)");
+                    .HasColumnType("numeric(10,2)");
 
                 entity.Property(p => p.FormaPagamento)
                     .HasColumnName("Metodo");
@@ -78,6 +81,16 @@ namespace sistemaagendamento.Data
             });
 
 
+
+            // O SQL inicial usa timestamps SEM fuso horário, correspondentes aos horários de agenda.
+            modelBuilder.Entity<Agendamento>().Property(x => x.DataHora)
+                .HasColumnType("timestamp without time zone");
+            modelBuilder.Entity<Pagamento>().Property(x => x.DataPagamento)
+                .HasColumnType("timestamp without time zone");
+            modelBuilder.Entity<Avaliacao>().Property(x => x.DataAvaliacao)
+                .HasColumnType("timestamp without time zone");
+            modelBuilder.Entity<Servico>().Property(x => x.Preco)
+                .HasColumnType("numeric(10,2)");
 
             modelBuilder.Entity<Agendamento>(entity =>
             {

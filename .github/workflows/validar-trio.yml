@@ -1,0 +1,16 @@
+name: Validar Trabalho Trio (.NET 10)
+on:
+  push:
+    branches: ['main', 'trio-railway-supabase-*']
+  pull_request:
+    branches: ['main']
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - run: dotnet restore sistemaagendamento.csproj
+      - run: dotnet publish sistemaagendamento.csproj -c Release -o /tmp/trio-publish --no-restore

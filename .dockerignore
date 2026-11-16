@@ -1,0 +1,14 @@
+.git
+.github
+.vs
+**/bin
+**/obj
+*.zip
+.importacao-original
+.trio-implantacao
+appsettings.json
+appsettings.*.json
+.env
+.env.*
+**/*.user
+README*.md

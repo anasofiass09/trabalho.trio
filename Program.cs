@@ -3,34 +3,35 @@ using sistemaagendamento.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Railway usa a variável PORT para expor a aplicação.
+var port = Environment.GetEnvironmentVariable("PORT");
+if (!string.IsNullOrWhiteSpace(port))
+    builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
+
 builder.Services.AddControllersWithViews();
 
-// 1. LER A STRING DE CONEX�O
-var conexao = builder.Configuration.GetConnectionString("ConexaoMySQL");
+// Configure a variável ConnectionStrings__ConexaoPostgres no Railway.
+var conexao = builder.Configuration.GetConnectionString("ConexaoPostgres");
+if (string.IsNullOrWhiteSpace(conexao))
+    throw new InvalidOperationException(
+        "Configure ConnectionStrings__ConexaoPostgres no Railway com a conexão PostgreSQL do Supabase.");
 
-// 2. CONFIGURAR O DBCONTEXT COM MYSQL
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseMySql(conexao, ServerVersion.AutoDetect(conexao))
-);
+    options.UseNpgsql(conexao, postgres => postgres.EnableRetryOnFailure(3)));
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+// HTTPS é finalizado pelo proxy do Railway.
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseAuthorization();
 
-// ROTA PADR�O MVC
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
